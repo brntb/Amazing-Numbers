@@ -2,6 +2,45 @@ package com.slinger;
 
 public class NumberProperties {
 
+    //return a string of all properties a number has
+    public String getProperties(long num) {
+        StringBuilder holder = new StringBuilder();
+        holder.append("\t\t").append(num).append(" is ");
+
+        if (isEven(num)) {
+            holder.append("even, ");
+        }
+
+        if (!isEven(num)) {
+            holder.append("odd, ");
+        }
+
+        if (isBuzzNumber(num)) {
+            holder.append("buzz, ");
+        }
+
+        if (isDuckNumber(num)) {
+            holder.append("duck, ");
+        }
+
+        if (isPalindromicNumber(num)) {
+            holder.append("palindromic, ");
+        }
+
+        if (isGapfulNumber(num)) {
+            holder.append("gapful, ");
+        }
+
+        if (isSpyNumber(num)) {
+            holder.append("spy, ");
+        }
+
+        //remove last , from holder
+        holder.setLength(holder.length() - 2);
+
+        return holder.toString();
+    }
+
     //checks if even
     public boolean isEven(long num) {
         return num % 2 == 0;
@@ -29,7 +68,7 @@ public class NumberProperties {
 
     //A Palindromic number is symmetrical; in other words, it stays the same regardless of
     // whether we read it from left or right
-    public boolean isPalindromic(long num) {
+    public boolean isPalindromicNumber(long num) {
         char[] holder = String.valueOf(num).toCharArray();
         int start = 0;
         int end = holder.length - 1;
@@ -46,7 +85,7 @@ public class NumberProperties {
 
     //Gapful numbers. It is a number that contains at least 3 digits and is divisible by
     //the concatenation of its first and last digit without a remainder
-    public boolean isGapful(long num) {
+    public boolean isGapfulNumber(long num) {
         String[] strArray = String.valueOf(num).split("");
 
         if (strArray.length < 3) {
@@ -59,6 +98,23 @@ public class NumberProperties {
         long toDivideBy = Long.parseLong(concatenation);
 
         return num % toDivideBy == 0;
+    }
+
+    //A number is said to be Spy if the sum of all digits is equal to the product of all digits.
+    public boolean isSpyNumber(long num) {
+        String[] numArray = String.valueOf(num).split("");
+
+        int product = 1;
+        int sum = 0;
+
+        //get product/sum of digits
+        for (String strDigit : numArray) {
+            int digit = Integer.parseInt(strDigit);
+            product *= digit;
+            sum += digit;
+        }
+
+        return sum == product;
     }
 
 }
