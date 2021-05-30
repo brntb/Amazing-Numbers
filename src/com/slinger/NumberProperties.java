@@ -35,6 +35,14 @@ public class NumberProperties {
             holder.append("spy, ");
         }
 
+        if (isPerfectSquareNumber(num)) {
+            holder.append("square, ");
+        }
+
+        if (isSunnyNumber(num)) {
+            holder.append("sunny, ");
+        }
+
         //remove last , from holder
         holder.setLength(holder.length() - 2);
 
@@ -116,5 +124,16 @@ public class NumberProperties {
 
         return sum == product;
     }
+
+    public boolean isPerfectSquareNumber(long num) {
+        long sr = (long) Math.sqrt(num);
+        return (sr * sr) == num;
+    }
+
+    //N is a sunny number if N+1 is a perfect square numb
+    public boolean isSunnyNumber(long num) {
+        return isPerfectSquareNumber(num + 1);
+    }
+
 
 }
