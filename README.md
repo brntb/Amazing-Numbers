@@ -1,36 +1,35 @@
 # HyperSkill-Amazing-Numbers-
-# Stage 2/8
+# Stage 3/8
 #Description
  
-Description
+In this stage, the program should check whether a number is a Palindromic one. A Palindromic number is symmetrical; in other words, it stays the same regardless of whether we read it from left or right. For example, 17371 is a palindromic number. 5 is also a palindromic number. 1234 is not. If read it from right, it becomes 4321. Add this new property to our program.
 
-Your next task is to determine whether a number is a Duck number. A Duck number is a positive number that contains zeroes. For example, 3210, 8050896, 70709 are Duck numbers. Note that a number with a leading 0 is not a Duck number. So, numbers like 035 or 0212 are not Duck numbers. Although, 01203 is a Duck, since it has a trailing 0.
+In previous stages, the program could process only one number. From now on, the program should accept a request from a user, analyze and execute it. The program should print Enter a request instead of asking for a natural number. The program should also continue execution unless a user enters a terminate command. Let's make it 0 (zero).
 
-In this stage, we need to simplify the way we display the information. We already have several properties that we need to show; we are going to add new features to our program in each stage. From now on, the card should follow this notation:
-
-Properties of {number}
-{property}: true/false
-{property}: true/false
-...
-{property}: true/false
-
-In this stage, the properties are even, odd, buzz and duck. For 14, the program output should look like this:
-
-Properties of 14
-        even: true
-         odd: false
-        buzz: true
-        duck: false
-
-The property order, indentation, and spaces are not checked by the tests. The tests are also case-insensitive.
+Your program should welcome users and print the instructions. At this point, make your program execute two commands. If a user enters a natural number, the program should indicate the properties of that number. If a user enters zero, then the program should exit. If a user enters a negative number by mistake, print an error message.
 Objectives
 
-Your program should print the properties of a natural number. In this stage, your program should:
+In this stage, your program should:
 
-    Ask a user to enter a natural number;
-    If the number is not natural, the program should print an error message;
-    If the number is natural, the program should indicate the properties of the number;
-    Finish the program after printing the message.
+    Welcome users;
+    Display the instructions;
+    Ask for a request;
+    Terminate the program if a user enters zero;
+    If a number is not natural, print an error message;
+    Print the properties of the natural number;
+    Continue execution from step 3, after the request has been processed.
+
+The properties are even, odd, buzz , duck and palindromic. The tests won't check the order of properties, indentation, and spaces. You may format numbers as you like. Please, add the information below:
+
+Instructions:
+
+Supported requests:
+- enter a natural number to know its properties;
+- enter 0 to exit.
+
+Error message:
+
+The first parameter should be a natural number or zero.
 
 Examples
 
@@ -38,40 +37,36 @@ The greater-than symbol followed by a space (> ) represents the user input. Note
 
 Example 1:
 
-Enter a natural number:
-> -7
-This number is not natural!
+Welcome to Amazing Numbers!
 
-Example 2:
+Supported requests:
+- enter a natural number to know its properties;
+- enter 0 to exit.
 
-Enter a natural number:
-> 15
-Properties of 15
+Enter a request:
+> 17
+Properties of 17
+        even: false
+         odd: true
+        buzz: true
+        duck: false
+ palindromic: false
+
+Enter a request:
+> 101
+Properties of 101
         even: false
          odd: true
         buzz: false
-        duck: false
-
-Example 3:
-
-Enter a natural number:
-> 14
-Properties of 14
-        even: true
-         odd: false
-        buzz: true
-        duck: false
-
-Example 4:
-
-Enter a natural number:
-> 102
-Properties of 102
-        even: true
-         odd: false
-        buzz: false
         duck: true
+ palindromic: true
 
- 
+Enter a request:
+> -56
 
- 
+The first parameter should be a natural number or zero.
+
+Enter a request:
+> 0
+
+Goodbye!
