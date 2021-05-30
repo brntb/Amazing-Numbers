@@ -1,35 +1,47 @@
 # HyperSkill-Amazing-Numbers-
-# Stage 3/8
+# Stage 4/8
 #Description
- 
-In this stage, the program should check whether a number is a Palindromic one. A Palindromic number is symmetrical; in other words, it stays the same regardless of whether we read it from left or right. For example, 17371 is a palindromic number. 5 is also a palindromic number. 1234 is not. If read it from right, it becomes 4321. Add this new property to our program.
 
-In previous stages, the program could process only one number. From now on, the program should accept a request from a user, analyze and execute it. The program should print Enter a request instead of asking for a natural number. The program should also continue execution unless a user enters a terminate command. Let's make it 0 (zero).
 
-Your program should welcome users and print the instructions. At this point, make your program execute two commands. If a user enters a natural number, the program should indicate the properties of that number. If a user enters zero, then the program should exit. If a user enters a negative number by mistake, print an error message.
+In this stage, we are going to add one more property — Gapful numbers. It is a number that contains at least 3 digits and is divisible by the concatenation of its first and last digit without a remainder. 12 is not a Gapful number, as it has only two digits. 132 is a Gapful number, as 132 % 12 == 0. 7881 is another example of a Gapful number, as 7881 % 71 == 0.
+
+Until this stage, the program could only process only one number at a time. Now, a user should be able to enter two numbers to obtain the properties of a list of numbers. Separate the numbers with one space. Space separates the first number in the list and the length of the list. For, example. 100 2 tells the program to process two numbers: 100 and 101. 1 100 means that the program is about to process 100 numbers, starting from 1. If a user enters one number, the program should work the same as in the previous stages. The program should analyze a number and print its properties. As before, if a user enters a single 0 (zero), terminate the program. Information about each number should be printed in one line in the following format:
+
+             140 is even, buzz, duck, gapful
+             141 is odd, palindromic
+
+So, the format is {number} is {property}, {property}, ... {property}
 Objectives
 
-In this stage, your program should:
+Your program should process various user requests. In this stage, your program should:
 
     Welcome users;
     Display the instructions;
     Ask for a request;
-    Terminate the program if a user enters zero;
-    If a number is not natural, print an error message;
-    Print the properties of the natural number;
-    Continue execution from step 3, after the request has been processed.
+    If a user enters zero, terminate the program;
+    If a user enters an empty request, print the instructions;
+    If numbers are not natural, print an error message;
+    If one number is entered, calculate and print the properties of this number;
+    For two numbers, print the list of numbers with properties;
+    Once the request is processed, continue execution from step 3.
 
-The properties are even, odd, buzz , duck and palindromic. The tests won't check the order of properties, indentation, and spaces. You may format numbers as you like. Please, add the information below:
+In the current stage, the property names include even, odd, buzz , duck, palindromic and gapful. The test won't check the order of properties, their indentation, and spaces. You may format numbers as you like. Please, add the information below:
 
-Instructions:
+Instructions
 
 Supported requests:
 - enter a natural number to know its properties;
+- enter two natural numbers to obtain the properties of the list:
+  * the first parameter represents a starting number;
+  * the second parameter shows how many consecutive numbers are to be printed;
+- separate the parameters with one space;
 - enter 0 to exit.
 
-Error message:
+Error messages
 
 The first parameter should be a natural number or zero.
+
+The second parameter should be a natural number.
 
 Examples
 
@@ -41,32 +53,56 @@ Welcome to Amazing Numbers!
 
 Supported requests:
 - enter a natural number to know its properties;
+- enter two natural numbers to obtain the properties of the list:
+  * the first parameter represents a starting number;
+  * the second parameters show how many consecutive numbers are to be processed;
+- separate the parameters with one space;
 - enter 0 to exit.
 
-Enter a request:
-> 17
-Properties of 17
-        even: false
-         odd: true
-        buzz: true
+Enter a request: > 7881
+
+Properties of 7,881
+        buzz: false
         duck: false
  palindromic: false
-
-Enter a request:
-> 101
-Properties of 101
+      gapful: true
         even: false
          odd: true
+
+Enter a request: > 7880
+
+Properties of 7,880
         buzz: false
         duck: true
- palindromic: true
+ palindromic: false
+      gapful: false
+        even: true
+         odd: false
 
-Enter a request:
-> -56
+Enter a request: > 105 5
+
+             105 is buzz, duck, gapful, odd
+             106 is duck, even
+             107 is buzz, duck, odd
+             108 is duck, gapful, even
+             109 is duck, odd
+
+Enter a request: > exit
 
 The first parameter should be a natural number or zero.
 
-Enter a request:
-> 0
+Enter a request: >
+
+Supported requests:
+- enter a natural number to know its properties;
+- enter two natural numbers to obtain the properties of the list:
+  * the first parameter represents a starting number;
+  * the second parameters show how many consecutive numbers are to be processed;
+- separate the parameters with one space;
+- enter 0 to exit.
+
+Enter a request: > 0
 
 Goodbye!
+
+Process finished with exit code 0
