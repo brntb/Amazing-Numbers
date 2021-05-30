@@ -14,45 +14,42 @@ public class Main {
             System.out.println("This number is not natural!");
         } else {
             int num = Integer.parseInt(input);
-            checkEvenOrOdd(num);
-            checkBuzzNumber(num);
+            boolean isEven = isEven(num);
+            boolean isOdd = !isEven;
+            boolean isBuzz = isBuzzNumber(num);
+            boolean isDuck = isDuckNumber(num);
+
+            System.out.println("Properties of " + num + "\n" +
+                    "        even: " + isEven + "\n" +
+                    "         odd: " + isOdd + "\n" +
+                    "        buzz: " + isBuzz + "\n" +
+                    "        duck: " + isDuck + "\n");
         }
-
-
     }
 
-    public static void checkEvenOrOdd(int num) {
-        if (num % 2 == 0) {
-            System.out.println("This number is Even.");
-        } else {
-            System.out.println("This number is Odd.");
-        }
+    //checks if even
+    public static boolean isEven(int num) {
+        return num % 2 == 0;
     }
 
     //buzz numbers are divisible by 7 or end with 7.
-    public static void checkBuzzNumber(int num) {
+    public static boolean isBuzzNumber(int num) {
         boolean isDivisibleBy7 = num % 7 == 0;
         boolean endsIn7 = num % 10 == 7;
 
-        //check if it is a buzz number
-        if (isDivisibleBy7 || endsIn7)  {
-            System.out.println("It is a Buzz number.");
-        } else {
-            System.out.println("It is not a Buzz number.");
+        return  isDivisibleBy7 || endsIn7;
+    }
+
+    //A Duck number is a positive number that contains zeroes
+    public static boolean isDuckNumber(int num) {
+        //loop through and check if a digit is 0
+        while (num > 0) {
+            int lastDigit = num % 10;
+            if (lastDigit == 0 && num > 9) return true;
+            num /= 10;
         }
 
-        //print out explanations
-        System.out.println("Explanation:");
-        if (isDivisibleBy7 && endsIn7) {
-            System.out.println(num + " is divisible by 7 and it ends with 7.");
-        } else if (isDivisibleBy7) {
-            System.out.println(num + " is divisible by 7.");
-        } else if (endsIn7) {
-            System.out.println(num + " is ends with 7.");
-        } else {
-            System.out.println(num + " is neither divisible by 7 nor it ends with 7.");
-        }
-
+        return false;
     }
 
 }
