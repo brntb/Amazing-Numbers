@@ -1,5 +1,8 @@
 package com.slinger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NumberProperties {
 
     //return a string of all properties a number has
@@ -9,9 +12,7 @@ public class NumberProperties {
 
         if (isEven(num)) {
             holder.append("even, ");
-        }
-
-        if (!isEven(num)) {
+        } else {
             holder.append("odd, ");
         }
 
@@ -46,6 +47,14 @@ public class NumberProperties {
         if (isJumpingNumber(num)) {
             holder.append("jumping, ");
         }
+
+        if(isHappyNumber(num)) {
+            holder.append("happy, ");
+        } else {
+            holder.append("sad, ");
+        }
+
+
 
         //remove last , from holder
         holder.setLength(holder.length() - 2);
@@ -150,7 +159,7 @@ public class NumberProperties {
             return Math.abs(leftDigit - rightDigit) == 1;
         }
 
-        //check 3 digits
+        //check 3 digits or more
         for (int i = 1; i < digitArray.length - 1; i++) {
             int centerDigit = Character.getNumericValue(digitArray[i]);
             int leftDigit = Character.getNumericValue(digitArray[i - 1]);
@@ -167,5 +176,40 @@ public class NumberProperties {
 
         return true;
     }
+
+    //a happy number is a number that reaches 1 after a sequence during which the number is replaced by the sum of
+    //each digit squares. For example, 13 is a happy number, as 12 + 32 = 10 which leads to 12 + 02 = 1.
+    public boolean isHappyNumber(long num) {
+        List<Long> seen = new ArrayList<>();
+
+        while (true) {
+            long squaredDigits = getSquaredDigits(num);
+
+            if (seen.contains(squaredDigits)) {
+                return false;
+            }
+
+            if (squaredDigits == 1) {
+                return true;
+            }
+
+            seen.add(num);
+            num = squaredDigits;
+        }
+
+    }
+
+    private long getSquaredDigits(long num) {
+        long sum = 0;
+
+        while (num > 0) {
+            long lastDigit = num % 10;
+            sum += (lastDigit * lastDigit);
+            num /= 10;
+        }
+
+        return sum;
+    }
+
 
 }

@@ -1,114 +1,63 @@
 package com.slinger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class NumberController {
 
     private final NumberProperties properties;
+    private final InputValidator validator;
     private final Scanner scanner;
-    private final List<String> validProperties;
+
 
     public NumberController(NumberProperties properties, Scanner scanner) {
         this.properties = properties;
+        this.validator = new InputValidator();
         this.scanner = scanner;
-
-        validProperties = Arrays.asList(
-                "BUZZ", "DUCK", "PALINDROMIC", "GAPFUL", "SPY", "EVEN", "ODD", "SQUARE", "SUNNY", "JUMPING"
-        );
     }
 
     public void run() {
         boolean isRunning = true;
 
-        //holds properties user wants to search for
-        List<String> givenProperties = new ArrayList<>();
-
         printGreeting();
         printMenu();
 
-        start:while (isRunning) {
-            givenProperties.clear();
-
+        while (isRunning) {
             System.out.print("Enter a request: ");
-            String[] input = scanner.nextLine().split("\\s+");
+            String input = scanner.nextLine().toLowerCase();
 
             //check for empty input
-            if (input[0].isEmpty()) {
+            if (input.isEmpty()) {
                 printMenu();
                 continue;
             }
-            //check to make sure first argument is int
-            if (!input[0].matches("\\d+")) {
-                System.out.println("\nThe first parameter should be a natural number or zero.\n");
+
+            //check for invalid input
+            if (!validator.isValid(input)) {
                 continue;
             }
 
-            //check to make sure second argument is int
-            if (input.length == 2 && (!input[1].matches("\\d+") || Long.parseLong(input[1]) < 0)) {
-                System.out.println("\nThe second parameter should be a natural number.\n");
-                continue;
-            }
+            //input is valid, split to array
+            String[] arguments = input.split("\\s+".toLowerCase().trim());
 
-            //add all given properties to list
-            if (input.length >= 3) {
-                for (int i = 2; i < input.length; i++) {
-                    String property = input[i];
-
-                    givenProperties.add(property.toLowerCase());
-
-                    //check for invalid pairs given, Even and Odd, Duck and Spy, Sunny and Square
-                    if (givenProperties.contains("even") && givenProperties.contains("odd")) {
-                        printMutuallyExclusiveProperties("odd", "even");
-                        continue start;
-                    }
-
-                    if (givenProperties.contains("duck") && givenProperties.contains("spy")) {
-                        printMutuallyExclusiveProperties("spy", "duck");
-                        continue start;
-                    }
-
-                    if (givenProperties.contains("sunny") && givenProperties.contains("square")) {
-                        printMutuallyExclusiveProperties("square", "sunny");
-                        continue start;
-                    }
-                }
-            }
-
-            //get all invalid properties if any are given
-            List<String> invalidProperties = new ArrayList<>();
-            for (String property : givenProperties) {
-                if (!validProperties.contains(property.toUpperCase())) {
-                    invalidProperties.add(property.toUpperCase());
-                }
-            }
-
-            //print all invalid properties back to user
-            if (!invalidProperties.isEmpty()) {
-                printInvalidProperties(invalidProperties);
-                continue;
-            }
-
-            long number = Long.parseLong(input[0]);
+            //grab number user wants info about
+            long number = Long.parseLong(arguments[0]);
 
             //check if user wants to quit
             if (number == 0) {
-                isRunning =false;
+                isRunning = false;
                 System.out.println("\nGoodbye!");
                 continue;
             }
 
             //get number properties
-            if (input.length == 1) {
+            if (arguments.length == 1) {
                 printNumberProperties(number);
-            } else if (input.length == 2) {
-                int range = Integer.parseInt(input[1]);
+            } else if (arguments.length == 2) {
+                int range = Integer.parseInt(arguments[1]);
                 printRangeOfProperties(number, range);
             } else {
-                int howMany = Integer.parseInt(input[1]);
-                printSpecificRangeOfProperties(number, howMany, givenProperties);
+                int howMany = Integer.parseInt(arguments[1]);
+                printSpecificRangeOfProperties(number, howMany, arguments);
             }
         }
     }
@@ -124,6 +73,8 @@ public class NumberController {
         boolean isSquare = properties.isPerfectSquareNumber(num);
         boolean isSunny = properties.isSunnyNumber(num);
         boolean isJumping = properties.isJumpingNumber(num);
+        boolean isHappy = properties.isHappyNumber(num);
+        boolean isSad = !isHappy;
 
         System.out.println("\nProperties of " + num + "\n" +
                 "        even: " + isEven + "\n" +
@@ -135,7 +86,9 @@ public class NumberController {
                 "         spy: " + isSpy + "\n" +
                 "      square: " + isSquare + "\n" +
                 "       sunny: " + isSunny + "\n" +
-                "     jumping: " + isJumping + "\n"
+                "     jumping: " + isJumping + "\n" +
+                "       happy: " + isHappy + "\n" +
+                "         sad: " + isSad + "\n"
         );
 
     }
@@ -153,17 +106,30 @@ public class NumberController {
         System.out.println();
     }
 
-    private void printSpecificRangeOfProperties(long num, int howMany, List<String> givenProperties) {
+    private void printSpecificRangeOfProperties(long num, int howMany, String[] givenProperties) {
         System.out.println();
         int found = 0;
 
         while (found < howMany) {
-            String numberProperties = properties.getProperties(num);
+            String numberProperties = properties.getProperties(num); //string holds all properties of given num
             boolean hasAllProperties = true;
 
             //check if number properties has all given properties
-            for (String current : givenProperties) {
-                if (!numberProperties.contains(current)) {
+            //start at i = 2, because first two numbers in array are just numbers
+            for (int i = 2; i < givenProperties.length; i++) {
+                String current = givenProperties[i];
+
+                //check for negations
+                if (current.startsWith("-")) {
+                    current = current.substring(1);
+
+                    if (numberProperties.contains(current)) {
+                        hasAllProperties = false;
+                        break;
+                    }
+
+
+                } else if (!numberProperties.contains(current)) { //check if property is in string
                     hasAllProperties = false;
                     break;
                 }
@@ -192,27 +158,8 @@ public class NumberController {
                 "  * the first parameter represents a starting number;\n" +
                 "  * the second parameter shows how many consecutive numbers are to be printed;\n" +
                 "- two natural numbers and properties to search for;\n" +
+                "- a property preceded by minus must not be present in numbers;\n" +
                 "- separate the parameters with one space;\n" +
                 "- enter 0 to exit.\n");
     }
-
-
-    private void printInvalidProperties(List<String> invalidProperties) {
-
-        if (invalidProperties.size() == 1) {
-            System.out.println("\nThe property " + invalidProperties + " is wrong.");
-        } else {
-            System.out.println("\nThe properties " + invalidProperties + " are wrong.");
-        }
-
-        System.out.println("Available properties: " + validProperties + "\n");
-    }
-
-    private void printMutuallyExclusiveProperties(String property1, String property2) {
-        System.out.println("\nThe request contains mutually exclusive properties: [" + property1.toUpperCase() + ", " + property2.toUpperCase() +"]\n" +
-                "There are no numbers with these properties.\n");
-    }
-
-
-
 }
