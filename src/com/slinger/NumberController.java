@@ -16,7 +16,7 @@ public class NumberController {
         this.scanner = scanner;
 
         validProperties = Arrays.asList(
-                "BUZZ", "DUCK", "PALINDROMIC", "GAPFUL", "SPY", "EVEN", "ODD", "SQUARE", "SUNNY"
+                "BUZZ", "DUCK", "PALINDROMIC", "GAPFUL", "SPY", "EVEN", "ODD", "SQUARE", "SUNNY", "JUMPING"
         );
     }
 
@@ -123,6 +123,7 @@ public class NumberController {
         boolean isSpy = properties.isSpyNumber(num);
         boolean isSquare = properties.isPerfectSquareNumber(num);
         boolean isSunny = properties.isSunnyNumber(num);
+        boolean isJumping = properties.isJumpingNumber(num);
 
         System.out.println("\nProperties of " + num + "\n" +
                 "        even: " + isEven + "\n" +
@@ -133,7 +134,8 @@ public class NumberController {
                 "      gapful: " + isGapful + "\n" +
                 "         spy: " + isSpy + "\n" +
                 "      square: " + isSquare + "\n" +
-                "       sunny: " + isSunny + "\n"
+                "       sunny: " + isSunny + "\n" +
+                "     jumping: " + isJumping + "\n"
         );
 
     }
@@ -188,8 +190,8 @@ public class NumberController {
                 "- enter a natural number to know its properties;\n" +
                 "- enter two natural numbers to obtain the properties of the list:\n" +
                 "  * the first parameter represents a starting number;\n" +
-                "  * the second parameters show how many consecutive numbers are to be processed;\n" +
-                "- two natural numbers and two properties to search for;\n" +
+                "  * the second parameter shows how many consecutive numbers are to be printed;\n" +
+                "- two natural numbers and properties to search for;\n" +
                 "- separate the parameters with one space;\n" +
                 "- enter 0 to exit.\n");
     }
@@ -210,6 +212,7 @@ public class NumberController {
         System.out.println("\nThe request contains mutually exclusive properties: [" + property1.toUpperCase() + ", " + property2.toUpperCase() +"]\n" +
                 "There are no numbers with these properties.\n");
     }
+
 
 
 }

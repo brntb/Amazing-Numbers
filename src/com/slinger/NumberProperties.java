@@ -43,6 +43,10 @@ public class NumberProperties {
             holder.append("sunny, ");
         }
 
+        if (isJumpingNumber(num)) {
+            holder.append("jumping, ");
+        }
+
         //remove last , from holder
         holder.setLength(holder.length() - 2);
 
@@ -135,5 +139,33 @@ public class NumberProperties {
         return isPerfectSquareNumber(num + 1);
     }
 
+    // Jumping number if the adjacent digits inside the number differ by 1.
+    public boolean isJumpingNumber(long num) {
+        char[] digitArray = String.valueOf(num).toCharArray();
+
+        //check two digit numbers
+        if (digitArray.length == 2) {
+            int leftDigit = Character.getNumericValue(digitArray[0]);
+            int rightDigit = Character.getNumericValue(digitArray[1]);
+            return Math.abs(leftDigit - rightDigit) == 1;
+        }
+
+        //check 3 digits
+        for (int i = 1; i < digitArray.length - 1; i++) {
+            int centerDigit = Character.getNumericValue(digitArray[i]);
+            int leftDigit = Character.getNumericValue(digitArray[i - 1]);
+            int rightDigit = Character.getNumericValue(digitArray[i + 1]);
+
+            int leftDif = Math.abs(centerDigit - leftDigit);
+            int rightDif = Math.abs(centerDigit - rightDigit);
+
+            if (leftDif != 1 || rightDif != 1) {
+                return false;
+            }
+
+        }
+
+        return true;
+    }
 
 }
