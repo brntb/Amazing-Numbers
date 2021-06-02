@@ -1,6 +1,6 @@
 # HyperSkill-Amazing-Numbers-
 # Stage 1/8
-#Description
+# Description
  
  Integers can be even or odd. All numbers that end with 0, 2, 4, 6, or 8 are even; the rest are odd. However, numbers have many other properties, you will learn about some of them in this project.
  
